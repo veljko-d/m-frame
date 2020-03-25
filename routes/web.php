@@ -25,4 +25,8 @@ return [
         'controller' => RegisterController::class,
         'method'     => 'getForm',
     ],
+    'post::register' => [
+        'controller' => RegisterController::class,
+        'method'     => 'register',
+    ],
 ];

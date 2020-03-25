@@ -4,10 +4,8 @@ namespace Tests\Unit\Actions\Auth;
 
 use App\Actions\Auth\LoginAction;
 use App\Core\Request\Request;
-use App\Domain\User;
 use App\Exceptions\InvalidPasswordException;
 use App\Exceptions\NotFoundException;
-use ReflectionClass;
 use Tests\Unit\Actions\AuthTestCase;
 
 /**
@@ -35,7 +33,6 @@ class LoginActionTest extends AuthTestCase
     public function testLoginValidationFail()
     {
         $loginAction = $this->getLoginAction();
-
         $request = $this->createMock(Request::class);
 
         $request->expects($this->once())
@@ -54,13 +51,12 @@ class LoginActionTest extends AuthTestCase
     public function testLoginUserNotFound()
     {
         $loginAction = $this->getLoginAction();
-
         $request = $this->createMock(Request::class);
 
         $inputs = [
             'inputs' => [
-                'email'    => 'test@example.com',
-                'password' => 'test123',
+                'email'    => 'dallas@example.com',
+                'password' => 'dallas123',
             ]
         ];
 
@@ -73,7 +69,7 @@ class LoginActionTest extends AuthTestCase
             ->method('get')
             ->with(
                 $this->equalTo(""),
-                $this->equalTo('test@example.com')
+                $this->equalTo('dallas@example.com')
             )
             ->will($this->throwException(new NotFoundException()));
 
@@ -91,7 +87,6 @@ class LoginActionTest extends AuthTestCase
     public function testLoginUserInvalidPassword()
     {
         $loginAction = $this->getLoginAction();
-
         $request = $this->createMock(Request::class);
 
         $inputs = [
@@ -138,7 +133,6 @@ class LoginActionTest extends AuthTestCase
     public function testLoginUser()
     {
         $loginAction = $this->getLoginAction();
-
         $request = $this->createMock(Request::class);
 
         $inputs = [
@@ -181,29 +175,5 @@ class LoginActionTest extends AuthTestCase
         $result = $loginAction->execute($request);
 
         $this->assertArrayHasKey('status', $result);
-    }
-
-    /**
-     * @return User
-     * @throws \ReflectionException
-     */
-    private function buildUser(): User
-    {
-        $user = new User();
-
-        $user = $user->create(
-            'Dallas',
-            'dallas',
-            'dallas@example.com',
-            '$2y$10$1SDZnKKH9yCHfWSSo1A6guCQ/JD4THnHziOFKU0pVbu2CPeDNFDHC'
-        );
-
-        $reflectionClass = new ReflectionClass(User::class);
-
-        $property = $reflectionClass->getProperty('id');
-        $property->setAccessible(true);
-        $property->setValue($user, 3);
-
-        return $user;
     }
 }

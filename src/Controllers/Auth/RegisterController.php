@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Auth;
 
+use App\Actions\Auth\RegisterAction;
 use App\Controllers\AbstractController;
 
 /**
@@ -17,5 +18,23 @@ class RegisterController extends AbstractController
     public function getForm(): string
     {
         return $this->render('auth/register', []);
+    }
+
+    /**
+     * @param RegisterAction $registerAction
+     *
+     * @return string
+     * @throws \ReflectionException
+     */
+    public function register(RegisterAction $registerAction)
+    {
+        $params = $registerAction->execute($this->request);
+
+        if (isset($params['errors'])) {
+            return $this->render('auth/register', $params);
+        }
+
+        $this->setStatusMessage('status', $params['status']);
+        $this->redirect->login();
     }
 }
