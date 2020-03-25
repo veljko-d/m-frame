@@ -13,6 +13,10 @@ return [
         'controller' => LoginController::class,
         'method'     => 'getForm',
     ],
+    'post::login' => [
+        'controller' => LoginController::class,
+        'method'     => 'login',
+    ],
     'post::logout' => [
         'controller' => LoginController::class,
         'method'     => 'logout',
