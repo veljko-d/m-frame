@@ -3,6 +3,7 @@
 use App\Core\ServiceProviders\DatabaseServiceProvider;
 use App\Core\ServiceProviders\TemplateEngineServiceProvider;
 use App\Core\ServiceProviders\LoggerServiceProvider;
+use App\Core\ServiceProviders\UserServiceProvider;
 
 return [
     'name' => getenv('APP_NAME', 'm-frame'),
@@ -20,5 +21,6 @@ return [
         DatabaseServiceProvider::class,
         TemplateEngineServiceProvider::class,
         LoggerServiceProvider::class,
+        UserServiceProvider::class,
     ],
 ];
