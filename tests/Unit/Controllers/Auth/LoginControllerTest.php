@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Controllers\Auth;
 
+use App\Actions\Auth\LogoutAction;
 use App\Controllers\Auth\LoginController;
 use Tests\Unit\ControllerTestCase;
 
@@ -49,5 +50,24 @@ class LoginControllerTest extends ControllerTestCase
             $response,
             'Response object is not the expected one.'
         );
+    }
+
+    /**
+     * @test
+     */
+    public function testLogout()
+    {
+        $loginController = $this->getController();
+
+        $logoutAction = $this->createMock(LogoutAction::class);
+
+        $logoutAction->expects($this->once())
+            ->method('execute')
+            ->with($this->request);
+
+        $this->redirect->expects($this->once())
+            ->method('home');
+
+        $loginController->logout($logoutAction);
     }
 }
