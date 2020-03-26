@@ -80,6 +80,10 @@ class RegisterActionTest extends AuthTestCase
             ->with($this->equalTo($user))
             ->will($this->throwException(new DbException()));
 
+        $this->logger->expects($this->once())
+            ->method('error')
+            ->with($this->stringContains('Error:'));
+
         $result = $registerAction->execute($request);
 
         $this->assertArrayHasKey('errors', $result);
