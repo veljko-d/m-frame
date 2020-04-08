@@ -30,7 +30,7 @@ abstract class ModelTestCase extends AbstractTestCase
         $dbConfig = [
             'db_connection' => 'mysql',
             'db_host'       => '192.168.10.10',
-            'db_name'       => 'shema',
+            'db_name'       => 'm-frame',
             'user'          => 'homestead',
             'password'      => 'secret',
         ];
